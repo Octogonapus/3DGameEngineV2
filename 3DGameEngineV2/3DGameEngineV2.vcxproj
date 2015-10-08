@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Documents\OpenGL_Lib\GLFW\include;D:\Downloads\glew-1.13.0-win32\glew-1.13.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Documents\OpenGL_Lib\GLFW\lib;D:\Downloads\glew-1.13.0-win32\glew-1.13.0\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Documents\OpenGL_Lib\GLFW\include;D:\Documents\OpenGL_Lib\glew\include;D:\Documents\OpenGL_Lib\glm\glm\glm;D:\Documents\OpenGL_Lib\stb\stb-master;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Documents\OpenGL_Lib\GLFW\lib;D:\Documents\OpenGL_Lib\glew\lib\Release\Win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -69,14 +69,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mesh.cpp" />
     <ClCompile Include="renderingEngine.cpp" />
+    <ClCompile Include="shader.cpp" />
+    <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragment.glsl" />
-    <None Include="vertex.glsl" />
+    <None Include="res\basicShader.fs" />
+    <None Include="res\basicShader.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="mesh.h" />
     <ClInclude Include="renderingEngine.h" />
+    <ClInclude Include="shader.h" />
+    <ClInclude Include="texture.h" />
+    <ClInclude Include="vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

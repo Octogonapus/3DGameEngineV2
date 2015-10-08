@@ -1,4 +1,5 @@
 #include "renderingEngine.h"
+#include "shader.h"
 
 //Global static pointer to ensure single instance
 RenderingEngine* RenderingEngine::m_instance = NULL;
