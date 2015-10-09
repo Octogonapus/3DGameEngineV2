@@ -8,6 +8,7 @@
 class Texture
 {
 public:
+	Texture(){}
 	Texture(const std::string& fileName);
 	virtual ~Texture();
 

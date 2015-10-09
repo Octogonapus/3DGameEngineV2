@@ -8,6 +8,7 @@
 class Mesh
 {
 public:
+	Mesh(){}
 	Mesh(Vertex* vertices, unsigned int numVertices);
 	virtual ~Mesh();
 

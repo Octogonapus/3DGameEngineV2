@@ -4,7 +4,6 @@
 Mesh::Mesh(Vertex* vertices, unsigned int numVertices)
 {
 	m_drawCount = numVertices;
-
 	//Generate vao
 	glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);

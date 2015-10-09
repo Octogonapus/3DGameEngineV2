@@ -12,63 +12,28 @@
 #include "vertex.h"
 #include "mesh.h"
 #include "texture.h"
+#include "transform.h"
+#include "entity.h"
 
 const GLuint WIDTH = 800, HEIGHT = 600;
 
 //Function prototype - GLFW
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void mouse_callback(GLFWwindow* window, int button, int action, int mode);
+
+//Temporary
+bool doTry = false;
 
 //Main function - Entry point for the game engine
 int main()
 {
+	//Get an instance of and initialize the rendering engine
 	RenderingEngine* re = RenderingEngine::instance();
 	re->initialize(800, 600, "OpenGL", NULL, NULL);
 
-	///* ----- Setup GL Buffers ----- */
-
-	////Vertex array object
-	//GLuint vao;
- //   glGenVertexArrays(1, &vao);
- //   glBindVertexArray(vao);
-
-	////Vertex buffer object
-	//GLuint vbo;
- //   glGenBuffers(1, &vbo);
- //   glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-	//float vertices[] = {
-	//	-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
-	//	 0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
-	//	 0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
-	//	-0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Bottom-left
-	//};
-
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	////Element buffer object
-	//GLuint ebo;
-	//glGenBuffers(1, &ebo);
-
-	//GLuint elements[] = {
- //       0, 1, 2,
- //       2, 3, 0
- //   };
-
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
-	//
-	////Temporary
-	//ShaderManager* sm = ShaderManager::instance();
-
-	////Specify vertex data input
-	//GLint posAttrib = glGetAttribLocation(sm->getShaderProgram(), "position");
- //   glEnableVertexAttribArray(posAttrib);
- //   glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), 0);
-
-	////Specify color data input
-	//GLint colorAttrib = glGetAttribLocation(sm->getShaderProgram(), "color");
-	//glEnableVertexAttribArray(colorAttrib);
-	//glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
+	//Bind the callback functions
+	glfwSetKeyCallback(re->getWindow(), key_callback);
+	glfwSetMouseButtonCallback(re->getWindow(), mouse_callback);
 
 	Vertex vertices[] = {
 		Vertex(glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0, 0.0)),
@@ -78,12 +43,22 @@ int main()
 
 	Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0]));
 
-	Shader shader("./res/basicShader");
-	shader.bind();
+	Shader shader1("./res/basicShader");
+	Shader shader2("./res/basicShader");
+	Shader shader3("./res/basicShader");
 
-	Texture texture("./res/bricks.jpg");
-	texture.bind(0);
+	Texture texture1("./res/bricksBad.jpg");
+	Texture texture2("./res/bricks.jpg");
+	Texture texture3("./res/bricks.jpg");
 
+	Transform transform1;
+	Transform transform2;
+	Transform transform3;
+	float counter = 0.0f;
+
+	Entity entity1(mesh, shader1, texture1, transform1);
+	Entity entity2(mesh, shader2, texture2, transform2);
+	Entity entity3(mesh, shader3, texture1, transform3);
 
 	/* ----- Setup window ----- */
 
@@ -100,11 +75,25 @@ int main()
 
 		//Clear the screen before each new render
 		glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//Draw a triangle
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		mesh.draw();
+		//Update transforms
+		entity1.getTransform()->setPosX(cosf(counter) / 2);
+
+		entity2.getTransform()->setPosY(cosf(counter) / 2);
+
+		entity3.getTransform()->setPosX(sinf(counter) / 2);
+
+		//Draw
+		entity1.render(0);
+		entity2.render(0);
+		if (doTry)
+		{
+			entity3.render(0);
+		}
+		
+		//Increment counter for transform modification
+		counter += 0.01f;
 
 		//Swap the color buffers to display the newly rendered image
 		glfwSwapBuffers(re->getWindow());
@@ -116,9 +105,20 @@ int main()
 
 	return 0;
 }
+
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-	//Escape key should close the window
+	//Escape key closes the window
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+void mouse_callback(GLFWwindow* window, int button, int action, int mode)
+{
+	//Left mouse button spawns a new mesh
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
+		doTry = true;
+		std::cout << "Done." << std::endl;
+	}
 }
