@@ -10,6 +10,16 @@ class Entity
 {
 public:
 	Entity(){}
+	Entity(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices, const std::string& shaderFileName, const std::string& textureFileName):
+		m_mesh(vertices, numVertices, indices, numIndices),
+		m_shader(shaderFileName),
+		m_texture(textureFileName),
+		m_transform() {}
+	Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName):
+		m_mesh(mesh),
+		m_shader(shaderFileName),
+		m_texture(textureFileName),
+		m_transform() {}
 	Entity(const Mesh& mesh, const Shader& shader, const Texture& texture, const Transform& transform):
 		m_mesh(mesh),
 		m_shader(shader),
@@ -18,7 +28,7 @@ public:
 	virtual ~Entity();
 
 	//Render the entity
-	void render(unsigned int textureUnit);
+	void render(const Camera& camera);
 
 	inline Mesh* getMesh() { return &m_mesh; }
 	inline Shader* getShader() { return &m_shader; }

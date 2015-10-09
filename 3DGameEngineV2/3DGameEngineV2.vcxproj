@@ -51,6 +51,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,6 +72,7 @@
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="obj_loader.cpp" />
     <ClCompile Include="renderingEngine.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -80,8 +82,10 @@
     <None Include="res\basicShader.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="camera.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="mesh.h" />
+    <ClInclude Include="obj_loader.h" />
     <ClInclude Include="renderingEngine.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="texture.h" />

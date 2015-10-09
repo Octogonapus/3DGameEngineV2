@@ -3,13 +3,16 @@
 
 #define GLEW_STATIC
 #include <GL/glew.h>
+#include <string>
 #include "vertex.h"
+#include "obj_loader.h"
 
 class Mesh
 {
 public:
 	Mesh(){}
-	Mesh(Vertex* vertices, unsigned int numVertices);
+	Mesh(const std::string& fileName);
+	Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
 	virtual ~Mesh();
 
 	//Render the mesh
@@ -23,6 +26,8 @@ private:
 	{
 		POSITION_VB,
 		TEXCOORD_VB,
+		INDEX_VB,
+		NORMAL_VB,
 		NUM_BUFFERS
 	};
 
@@ -30,6 +35,8 @@ private:
 
 	//How much to draw
 	unsigned int m_drawCount;
+
+	void initMesh(const IndexedModel& model);
 };
 
 #endif

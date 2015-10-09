@@ -5,6 +5,7 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include "transform.h"
+#include "camera.h"
 
 class Shader
 {
@@ -17,7 +18,7 @@ public:
 	void bind();
 
 	//Update all the uniforms
-	void update(const Transform& transform);
+	void update(const Transform& transform, const Camera& camera);
 private:
 	//Full shader program
 	GLuint m_program;

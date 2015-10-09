@@ -76,5 +76,12 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 	//Making this smaller than the window size allows other elements to be displayed outside the OpenGL viewport
 	glViewport(0, 0, width, height);
 
+	//Depth buffer
+	glEnable(GL_DEPTH_TEST);
+
+	//Back face culling
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
 	std::cout << "RenderingEngine initialized correctly." << std::endl;
 }

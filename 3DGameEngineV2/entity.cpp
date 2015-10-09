@@ -7,10 +7,10 @@ Entity::~Entity()
 	m_texture.~Texture();
 }
 
-void Entity::render(unsigned int textureUnit)
+void Entity::render(const Camera& camera)
 {
-	m_texture.bind(textureUnit);
+	m_texture.bind(0);
 	m_shader.bind();
-	m_shader.update(m_transform);
+	m_shader.update(m_transform, camera);
 	m_mesh.draw();
 }

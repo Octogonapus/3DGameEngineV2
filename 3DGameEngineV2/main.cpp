@@ -14,6 +14,7 @@
 #include "texture.h"
 #include "transform.h"
 #include "entity.h"
+#include "camera.h"
 
 const GLuint WIDTH = 800, HEIGHT = 600;
 
@@ -41,30 +42,16 @@ int main()
 		Vertex(glm::vec3(0.5, -0.5, 0), glm::vec2(1.0, 0.0))
 	};
 
-	Mesh mesh(vertices, sizeof(vertices) / sizeof(vertices[0]));
+	unsigned int indices[] {0, 1, 2};
 
-	Shader shader1("./res/basicShader");
-	Shader shader2("./res/basicShader");
-	Shader shader3("./res/basicShader");
+	Mesh mesh1("./res/monkey3.obj");
 
-	Texture texture1("./res/bricksBad.jpg");
-	Texture texture2("./res/bricks.jpg");
-	Texture texture3("./res/bricks.jpg");
-
-	Transform transform1;
-	Transform transform2;
-	Transform transform3;
+	Entity entity1(mesh1, "./res/basicShader", "./res/bricks.jpg");
+	Entity entity2(vertices, sizeof(vertices) / sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0]), "./res/basicShader", "./res/bricks.jpg");
+	Entity entity3(vertices, sizeof(vertices) / sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0]), "./res/basicShader", "./res/bricks.jpg");
 	float counter = 0.0f;
 
-	Entity entity1(mesh, shader1, texture1, transform1);
-	Entity entity2(mesh, shader2, texture2, transform2);
-	Entity entity3(mesh, shader3, texture1, transform3);
-
-	/* ----- Setup window ----- */
-
-	//Tell OpenGL the size of the rendering window
-	//Making this smaller than the window size allows other elements to be displayed outside the OpenGL viewport
-	glViewport(0, 0, WIDTH, HEIGHT);
+	Camera camera(glm::vec3(0, 0, -5), 70.0f, 800.0f / 600.0f, 0.01f, 1000.0f);
 
 	//Main game loop
 	//Do not end the loop until the window has been told to close
@@ -78,18 +65,20 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//Update transforms
-		entity1.getTransform()->setPosX(cosf(counter) / 2);
+		entity1.getTransform()->setPosZ(sinf(counter) * 2);
+		entity1.getTransform()->setRotY(counter / 2);
 
 		entity2.getTransform()->setPosY(cosf(counter) / 2);
+		entity2.getTransform()->setPosZ(1);
 
 		entity3.getTransform()->setPosX(sinf(counter) / 2);
 
 		//Draw
-		entity1.render(0);
-		entity2.render(0);
+		entity1.render(camera);
+		//entity2.render(camera);
 		if (doTry)
 		{
-			entity3.render(0);
+			entity3.render(camera);
 		}
 		
 		//Increment counter for transform modification
