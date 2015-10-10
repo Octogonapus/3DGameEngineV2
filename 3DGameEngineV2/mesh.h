@@ -1,42 +1,30 @@
 #ifndef MESH_H_INCLUDED
 #define MESH_H_INCLUDED
 
-#define GLEW_STATIC
-#include <GL/glew.h>
 #include <string>
+#include <map>
 #include "vertex.h"
-#include "obj_loader.h"
+#include "indexedModel.h"
+#include "meshData.h"
 
 class Mesh
 {
 public:
-	Mesh(){}
-	Mesh(const std::string& fileName);
-	Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
+	Mesh(const std::string& fileName = "cube.obj");
+	Mesh(const std::string& meshname, const IndexedModel& model);
+	Mesh(const Mesh& mesh);
+	//Mesh(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices);
 	virtual ~Mesh();
 
 	//Render the mesh
-	void draw();
+	void draw() const;
 private:
-	//Vertex array object
-	GLuint m_vao;
+	static std::map<std::string, MeshData*> s_resourceMap;
 
-	//Vertex array buffer array
-	enum
-	{
-		POSITION_VB,
-		TEXCOORD_VB,
-		INDEX_VB,
-		NORMAL_VB,
-		NUM_BUFFERS
-	};
+	std::string m_fileName;
+	MeshData* m_meshData;
 
-	GLuint m_vab[NUM_BUFFERS];
-
-	//How much to draw
-	unsigned int m_drawCount;
-
-	void initMesh(const IndexedModel& model);
+	void operator=(Mesh& other){}
 };
 
 #endif

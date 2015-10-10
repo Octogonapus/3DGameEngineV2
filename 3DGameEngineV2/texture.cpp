@@ -7,7 +7,8 @@
 Texture::Texture(const std::string& fileName)
 {
 	int width, height, numComponents;
-	unsigned char* imageData = stbi_load(fileName.c_str(), &width, &height, &numComponents, 4);
+	const std::string fullFileName = "./res/textures/" + fileName;
+	unsigned char* imageData = stbi_load(fullFileName.c_str(), &width, &height, &numComponents, 4);
 
 	if (imageData == NULL)
 		std::cerr << "Texture data loading failed: " << fileName << std::endl;

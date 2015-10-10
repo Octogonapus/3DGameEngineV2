@@ -39,8 +39,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Documents\OpenGL_Lib\GLFW\include;D:\Documents\OpenGL_Lib\glew\include;D:\Documents\OpenGL_Lib\glm\glm\glm;D:\Documents\OpenGL_Lib\stb\stb-master;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Documents\OpenGL_Lib\GLFW\lib;D:\Documents\OpenGL_Lib\glew\lib\Release\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Documents\OpenGL_Lib\GLFW\include;D:\Documents\OpenGL_Lib\glew\include;D:\Documents\OpenGL_Lib\glm\glm\glm;D:\Documents\OpenGL_Lib\stb\stb-master;D:\Documents\OpenGL_Lib\assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Documents\OpenGL_Lib\GLFW\lib;D:\Documents\OpenGL_Lib\glew\lib\Release\Win32;D:\Documents\OpenGL_Lib\assimp\build\code\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -50,7 +50,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;assimpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -70,9 +70,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="entity.cpp" />
+    <ClCompile Include="indexedModel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mesh.cpp" />
-    <ClCompile Include="obj_loader.cpp" />
+    <ClCompile Include="meshData.cpp" />
     <ClCompile Include="renderingEngine.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -84,8 +85,10 @@
   <ItemGroup>
     <ClInclude Include="camera.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="indexedModel.h" />
     <ClInclude Include="mesh.h" />
-    <ClInclude Include="obj_loader.h" />
+    <ClInclude Include="meshData.h" />
+    <ClInclude Include="referenceCounter.h" />
     <ClInclude Include="renderingEngine.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="texture.h" />

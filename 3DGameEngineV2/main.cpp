@@ -37,18 +37,18 @@ int main()
 	glfwSetMouseButtonCallback(re->getWindow(), mouse_callback);
 
 	Vertex vertices[] = {
-		Vertex(glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0, 0.0)),
-		Vertex(glm::vec3(0, 0.5, 0), glm::vec2(0.5, 1.0)),
-		Vertex(glm::vec3(0.5, -0.5, 0), glm::vec2(1.0, 0.0))
+		Vertex{glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0, 0.0)},
+		Vertex{glm::vec3(0, 0.5, 0), glm::vec2(0.5, 1.0)},
+		Vertex{glm::vec3(0.5, -0.5, 0), glm::vec2(1.0, 0.0)}
 	};
 
 	unsigned int indices[] {0, 1, 2};
 
-	Mesh mesh1("./res/monkey3.obj");
+	Mesh mesh1("cubeNew.dae");
 
-	Entity entity1(mesh1, "./res/basicShader", "./res/bricks.jpg");
-	Entity entity2(vertices, sizeof(vertices) / sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0]), "./res/basicShader", "./res/bricks.jpg");
-	Entity entity3(vertices, sizeof(vertices) / sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0]), "./res/basicShader", "./res/bricks.jpg");
+	Entity entity1(mesh1, "basicShader", "bricks.jpg");
+	//Entity entity2(vertices, sizeof(vertices) / sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0]), "./res/basicShader", "./res/bricks.jpg");
+	//Entity entity3(vertices, sizeof(vertices) / sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0]), "./res/basicShader", "./res/bricks.jpg");
 	float counter = 0.0f;
 
 	Camera camera(glm::vec3(0, 0, -5), 70.0f, 800.0f / 600.0f, 0.01f, 1000.0f);
@@ -65,20 +65,20 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//Update transforms
-		entity1.getTransform()->setPosZ(sinf(counter) * 2);
+		entity1.getTransform()->setRotX(counter / 2);
 		entity1.getTransform()->setRotY(counter / 2);
 
-		entity2.getTransform()->setPosY(cosf(counter) / 2);
-		entity2.getTransform()->setPosZ(1);
+		//entity2.getTransform()->setPosY(cosf(counter) / 2);
+		//entity2.getTransform()->setPosZ(1);
 
-		entity3.getTransform()->setPosX(sinf(counter) / 2);
+		//entity3.getTransform()->setPosX(sinf(counter) / 2);
 
 		//Draw
 		entity1.render(camera);
 		//entity2.render(camera);
 		if (doTry)
 		{
-			entity3.render(camera);
+			//entity3.render(camera);
 		}
 		
 		//Increment counter for transform modification

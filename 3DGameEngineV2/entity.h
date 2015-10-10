@@ -10,11 +10,11 @@ class Entity
 {
 public:
 	Entity(){}
-	Entity(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices, const std::string& shaderFileName, const std::string& textureFileName):
+	/*Entity(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices, const std::string& shaderFileName, const std::string& textureFileName):
 		m_mesh(vertices, numVertices, indices, numIndices),
 		m_shader(shaderFileName),
 		m_texture(textureFileName),
-		m_transform() {}
+		m_transform() {}*/
 	Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName):
 		m_mesh(mesh),
 		m_shader(shaderFileName),
