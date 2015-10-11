@@ -98,8 +98,6 @@ Mesh::~Mesh()
 	{
 		if (m_fileName.length() > 0)
 			s_resourceMap.erase(m_fileName);
-
-		delete m_meshData;
 	}
 }
 

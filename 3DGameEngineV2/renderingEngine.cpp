@@ -32,9 +32,12 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-
+	
 	//Make the window
 	m_window = glfwCreateWindow(width, height, title, monitor, share);
+
+	//Have GLFW capture the cursor
+	glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	//Window must have been created correctly, so make the current context the new window
 	glfwMakeContextCurrent(m_window);
@@ -82,6 +85,9 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 	//Back face culling
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
+
+	//Stencil testing
+	glEnable(GL_STENCIL_TEST);
 
 	std::cout << "RenderingEngine initialized correctly." << std::endl;
 }

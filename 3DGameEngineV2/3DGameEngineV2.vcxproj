@@ -71,6 +71,7 @@
   <ItemGroup>
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="indexedModel.cpp" />
+    <ClCompile Include="inputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mesh.cpp" />
     <ClCompile Include="meshData.cpp" />
@@ -81,11 +82,14 @@
   <ItemGroup>
     <None Include="res\basicShader.fs" />
     <None Include="res\basicShader.vs" />
+    <None Include="res\shaders\simpleFragmentNew.fs" />
+    <None Include="res\shaders\simpleVertexNew.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="indexedModel.h" />
+    <ClInclude Include="inputManager.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="meshData.h" />
     <ClInclude Include="referenceCounter.h" />

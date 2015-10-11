@@ -15,12 +15,18 @@
 #include "transform.h"
 #include "entity.h"
 #include "camera.h"
+#include "inputManager.h"
 
 const GLuint WIDTH = 800, HEIGHT = 600;
 
-//Function prototype - GLFW
+//GLFW callback functions
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_callback(GLFWwindow* window, int button, int action, int mode);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+
+//InputManager instance
+InputManager* imInstance = InputManager::instance();
 
 //Temporary
 bool doTry = false;
@@ -32,9 +38,11 @@ int main()
 	RenderingEngine* re = RenderingEngine::instance();
 	re->initialize(800, 600, "OpenGL", NULL, NULL);
 
-	//Bind the callback functions
+	//Register the callback functions
 	glfwSetKeyCallback(re->getWindow(), key_callback);
 	glfwSetMouseButtonCallback(re->getWindow(), mouse_callback);
+	glfwSetCursorPosCallback(re->getWindow(), mouse_callback);
+	glfwSetScrollCallback(re->getWindow(), scroll_callback);
 
 	Vertex vertices[] = {
 		Vertex{glm::vec3(-0.5, -0.5, 0), glm::vec2(0.0, 0.0)},
@@ -51,7 +59,7 @@ int main()
 	//Entity entity3(vertices, sizeof(vertices) / sizeof(vertices[0]), indices, sizeof(indices) / sizeof(indices[0]), "./res/basicShader", "./res/bricks.jpg");
 	float counter = 0.0f;
 
-	Camera camera(glm::vec3(0, 0, -5), 70.0f, 800.0f / 600.0f, 0.01f, 1000.0f);
+	Camera mainCamera(glm::vec3(0, 0, 0), 70.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 1000.0f);
 
 	//Main game loop
 	//Do not end the loop until the window has been told to close
@@ -62,19 +70,18 @@ int main()
 
 		//Clear the screen before each new render
 		glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+		//Update camera position
+		glfwPollEvents();
+		mainCamera.updateMovement();
 
 		//Update transforms
 		entity1.getTransform()->setRotX(counter / 2);
 		entity1.getTransform()->setRotY(counter / 2);
 
-		//entity2.getTransform()->setPosY(cosf(counter) / 2);
-		//entity2.getTransform()->setPosZ(1);
-
-		//entity3.getTransform()->setPosX(sinf(counter) / 2);
-
 		//Draw
-		entity1.render(camera);
+		entity1.render(mainCamera);
 		//entity2.render(camera);
 		if (doTry)
 		{
@@ -100,6 +107,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	//Escape key closes the window
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
+
+	if (action == GLFW_PRESS)
+		imInstance->setKey(key, true);
+	else if (action == GLFW_RELEASE)
+		imInstance->setKey(key, false);
 }
 
 void mouse_callback(GLFWwindow* window, int button, int action, int mode)
@@ -110,4 +122,16 @@ void mouse_callback(GLFWwindow* window, int button, int action, int mode)
 		doTry = true;
 		std::cout << "Done." << std::endl;
 	}
+}
+
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	imInstance->setMouseX(xpos);
+	imInstance->setMouseY(ypos);
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	imInstance->setScrollX(xoffset);
+	imInstance->setScrollY(yoffset);
 }

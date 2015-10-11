@@ -15,7 +15,7 @@ public:
 	virtual ~Shader();
 
 	//Bind this shader for use
-	void bind();
+	void use();
 
 	//Update all the uniforms
 	void update(const Transform& transform, const Camera& camera);

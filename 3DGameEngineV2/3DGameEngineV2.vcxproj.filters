@@ -39,12 +39,21 @@
     <ClCompile Include="indexedModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="inputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\basicShader.vs">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\basicShader.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\simpleVertexNew.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\simpleFragmentNew.fs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
@@ -80,6 +89,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="referenceCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

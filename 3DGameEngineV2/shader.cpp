@@ -39,7 +39,7 @@ Shader::~Shader()
 	glDeleteProgram(m_program);
 }
 
-void Shader::bind()
+void Shader::use()
 {
 	glUseProgram(m_program);
 }
