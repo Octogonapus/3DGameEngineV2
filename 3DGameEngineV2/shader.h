@@ -18,7 +18,7 @@ public:
 	void use();
 
 	//Update all the uniforms
-	void update(const Transform& transform, const Camera& camera);
+	void update(const Transform& transform, const Camera& camera, const glm::vec3& lightPos);
 private:
 	//Full shader program
 	GLuint m_program;
@@ -30,9 +30,20 @@ private:
 	//Uniform enum
 	enum
 	{
-		TRANSFORM_U,
+		MODEL_U,
+		VIEW_U,
+		PROJECTION_U,
 		OBJECTCOLOR_U,
 		LIGHTCOLOR_U,
+		LIGHTPOS_U,
+		VIEWPOS_U,
+		MAT_AMBIENT_U,
+		MAT_DIFFUSE_U,
+		MAT_SPECULAR_U,
+		MAT_SHININESS_U,
+		LIGHT_AMBIENT_U,
+		LIGHT_DIFFUSE_U,
+		LIGHT_SPECULAR_U,
 		NUM_UNIFORMS
 	};
 

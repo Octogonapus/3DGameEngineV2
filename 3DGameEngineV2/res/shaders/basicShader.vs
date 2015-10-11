@@ -6,12 +6,17 @@ layout (location = 2) in vec3 normal;
 
 out vec2 texCoord0;
 out vec3 normal0;
+out vec3 fragPos0;
 
-uniform mat4 transform;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
 
 void main()
 {
-	gl_Position = transform * vec4(position, 1.0);
+	gl_Position = projection * view * model * vec4(position, 1.0);
 	texCoord0 = texCoord;
-	normal0 = (transform * vec4(normal, 0.0)).xyz;
+	//normal0 = (projection * view * model * vec4(normal, 0.0)).xyz;
+	normal0 = mat3(transpose(inverse(model))) * normal;
+	fragPos0 = vec3(model * vec4(position, 1.0f));
 }

@@ -47,9 +47,17 @@ int main()
 
 	Entity entity1(mesh1, "basicShader", "bricks.jpg");
 	Entity entity2(mesh1, "lampShader", "bricks.jpg");
+	Entity entity3(mesh1, "lampShader", "bricks.jpg");
+	
+	entity2.getTransform()->setPosX(7);
+	entity2.getTransform()->setPosZ(3);
+
+	entity3.getTransform()->setPos(glm::vec3(0.0f, 0.5f, 2.0f));
+	entity3.getTransform()->setScale(glm::vec3(0.1f, 0.1f, 0.1f));
+	
 	float counter = 0.0f;
 
-	Camera mainCamera(glm::vec3(0, 0, 0), 70.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 1000.0f);
+	Camera mainCamera(glm::vec3(0, 0, 13), 70.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 1000.0f);
 
 	//Main game loop
 	//Do not end the loop until the window has been told to close
@@ -67,12 +75,12 @@ int main()
 		mainCamera.updateMovement();
 
 		//Update transforms
-		entity2.getTransform()->setPosX(7);
-		entity2.getTransform()->setPosZ(3);
+		entity3.getTransform()->setPosX(entity3.getTransform()->getPos().x + cosf(counter) / 100);
 
 		//Draw
-		entity1.render(mainCamera);
-		entity2.render(mainCamera);
+		entity1.render(mainCamera, entity3.getTransform()->getPos());
+		entity2.render(mainCamera, entity3.getTransform()->getPos());
+		entity3.render(mainCamera, entity3.getTransform()->getPos());
 		
 		//Increment counter for transform modification
 		counter += 0.01f;

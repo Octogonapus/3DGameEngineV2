@@ -21,15 +21,16 @@ public:
 		m_zNear(zNear),
 		m_zFar(zFar)
 	{
-		m_perspective = glm::perspective(fov, aspect, zNear, zFar);
+		m_projection = glm::perspective(fov, aspect, zNear, zFar);
 		m_forward = glm::vec3(0, 0, -1);
 		m_up = glm::vec3(0, 1, 0);
 	}
 
-	inline glm::mat4 getViewProjection() const
-	{
-		return m_perspective * glm::lookAt(m_position, m_position + m_forward, m_up);
-	}
+	//Camera view matrix
+	inline glm::mat4 getView() const { return glm::lookAt(m_position, m_position + m_forward, m_up); }
+
+	//Camera projection matrix
+	inline glm::mat4 getProjection() const { return m_projection; }
 
 	void updateMovement()
 	{
@@ -88,8 +89,8 @@ public:
 
 	inline void setPosition(const glm::vec3& newPos) { m_position = newPos; }
 private:
-	//Perspective matrix
-	glm::mat4 m_perspective;
+	//View projection matrix
+	glm::mat4 m_projection;
 
 	//Camera position
 	glm::vec3 m_position;

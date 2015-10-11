@@ -22,13 +22,13 @@ public:
 		m_transform() {}
 	Entity(const Mesh& mesh, const Shader& shader, const Texture& texture, const Transform& transform):
 		m_mesh(mesh),
-		m_shader(shader),
+		m_shader(m_shader),
 		m_texture(texture),
 		m_transform(transform) {}
 	virtual ~Entity();
 
 	//Render the entity
-	void render(const Camera& camera);
+	void render(const Camera& camera, const glm::vec3& lightDir);
 
 	inline Mesh* getMesh() { return &m_mesh; }
 	inline Shader* getShader() { return &m_shader; }
