@@ -10,20 +10,38 @@ class Entity
 {
 public:
 	Entity(){}
-	/*Entity(Vertex* vertices, unsigned int numVertices, unsigned int* indices, unsigned int numIndices, const std::string& shaderFileName, const std::string& textureFileName):
-		m_mesh(vertices, numVertices, indices, numIndices),
-		m_shader(shaderFileName),
-		m_texture(textureFileName),
-		m_transform() {}*/
 	Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName):
 		m_mesh(mesh),
 		m_shader(shaderFileName),
 		m_texture(textureFileName),
 		m_transform() {}
+	Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName, const std::string& specularMapTextureFileName):
+		m_mesh(mesh),
+		m_shader(shaderFileName),
+		m_texture(textureFileName),
+		m_hasSpecularMap(true),
+		m_specularMapTexture(specularMapTextureFileName),
+		m_transform() {}
+	Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName, const std::string& specularMapTextureFileName, const std::string& emissionMapTextureFileName):
+		m_mesh(mesh),
+		m_shader(shaderFileName),
+		m_texture(textureFileName),
+		m_hasSpecularMap(true),
+		m_specularMapTexture(specularMapTextureFileName),
+		m_hasEmissionMap(true),
+		m_emissionMapTexture(emissionMapTextureFileName),
+		m_transform() {}
 	Entity(const Mesh& mesh, const Shader& shader, const Texture& texture, const Transform& transform):
 		m_mesh(mesh),
 		m_shader(m_shader),
 		m_texture(texture),
+		m_transform(transform) {}
+	Entity(const Mesh& mesh, const Shader& shader, const Texture& texture, const Texture& specularMapTexture, const Transform& transform):
+		m_mesh(mesh),
+		m_shader(m_shader),
+		m_texture(texture),
+		m_hasSpecularMap(true),
+		m_specularMapTexture(specularMapTexture),
 		m_transform(transform) {}
 	virtual ~Entity();
 
@@ -35,9 +53,24 @@ public:
 	inline Texture* getTexture() { return &m_texture; }
 	inline Transform* getTransform() { return &m_transform; }
 private:
+	//Mesh
 	Mesh m_mesh;
+
+	//Shader
 	Shader m_shader;
+
+	//Main texture (i.e. diffuse map)
 	Texture m_texture;
+
+	//Specular map
+	bool m_hasSpecularMap = false;
+	Texture m_specularMapTexture;
+
+	//Emission map
+	bool m_hasEmissionMap = false;
+	Texture m_emissionMapTexture;
+
+	//Transform
 	Transform m_transform;
 };
 

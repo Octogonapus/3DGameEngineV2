@@ -15,6 +15,8 @@ public:
 	//Bind this texture for use
 	void bind(unsigned int unit);
 
+	//Get texture data
+	inline GLuint getTextureData() const { return m_texture; }
 private:
 	//Texture data
 	GLuint m_texture;

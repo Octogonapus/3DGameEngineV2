@@ -45,15 +45,11 @@ int main()
 
 	Mesh mesh1("cubeNew.dae");
 
-	Entity entity1(mesh1, "basicShader", "bricks.jpg");
+	Entity entity1(mesh1, "basicShader", "container2.png", "container2_specular.png", "matrix.jpg");
 	Entity entity2(mesh1, "lampShader", "bricks.jpg");
-	Entity entity3(mesh1, "lampShader", "bricks.jpg");
-	
-	entity2.getTransform()->setPosX(7);
-	entity2.getTransform()->setPosZ(3);
 
-	entity3.getTransform()->setPos(glm::vec3(0.0f, 0.5f, 2.0f));
-	entity3.getTransform()->setScale(glm::vec3(0.1f, 0.1f, 0.1f));
+	entity2.getTransform()->setPos(glm::vec3(0.0f, 0.5f, 2.0f));
+	entity2.getTransform()->setScale(glm::vec3(0.1f, 0.1f, 0.1f));
 	
 	float counter = 0.0f;
 
@@ -75,12 +71,11 @@ int main()
 		mainCamera.updateMovement();
 
 		//Update transforms
-		entity3.getTransform()->setPosX(entity3.getTransform()->getPos().x + cosf(counter) / 100);
+		entity2.getTransform()->setPosX(entity2.getTransform()->getPos().x + cosf(counter) / 98);
 
 		//Draw
-		entity1.render(mainCamera, entity3.getTransform()->getPos());
-		entity2.render(mainCamera, entity3.getTransform()->getPos());
-		entity3.render(mainCamera, entity3.getTransform()->getPos());
+		entity1.render(mainCamera, entity2.getTransform()->getPos());
+		entity2.render(mainCamera, entity2.getTransform()->getPos());
 		
 		//Increment counter for transform modification
 		counter += 0.01f;
