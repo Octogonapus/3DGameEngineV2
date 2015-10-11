@@ -80,12 +80,6 @@
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\basicShader.fs" />
-    <None Include="res\basicShader.vs" />
-    <None Include="res\shaders\simpleFragmentNew.fs" />
-    <None Include="res\shaders\simpleVertexNew.vs" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="camera.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="indexedModel.h" />
@@ -98,6 +92,12 @@
     <ClInclude Include="texture.h" />
     <ClInclude Include="transform.h" />
     <ClInclude Include="vertex.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\basicShader.fs" />
+    <None Include="res\shaders\basicShader.vs" />
+    <None Include="res\shaders\lampShader.fs" />
+    <None Include="res\shaders\lampShader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

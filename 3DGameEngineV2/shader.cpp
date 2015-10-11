@@ -6,6 +6,13 @@ static std::string loadShader(const std::string& fileName);
 static void checkShaderError(GLuint shader, GLuint flag, bool isProgram, const std::string& errorMessage, const std::string& successMessage);
 static GLuint createShader(const std::string& code, GLenum type);
 
+//TODO: Make Shaders interface with a ShaderProgram class
+//This class will handle the creation of a program from individual shaders
+//Each shader will get loaded from one file (not in bulk like this current constructor)
+//glBindAttribLocation will be done by the user after loading the shader
+//m_uniforms will belond to ShaderProgram and uniforms will be added by the user after linking and validating a program
+//No attributes or uniforms will be hard-coded
+
 Shader::Shader(const std::string& fileName)
 {
 	m_program = glCreateProgram();
@@ -27,6 +34,8 @@ Shader::Shader(const std::string& fileName)
 	checkShaderError(m_program, GL_VALIDATE_STATUS, true, "Shader program validation failed: ", "Shader program validation succeeded.");
 
 	m_uniforms[TRANSFORM_U] = glGetUniformLocation(m_program, "transform");
+	m_uniforms[OBJECTCOLOR_U] = glGetUniformLocation(m_program, "objectColor");
+	m_uniforms[LIGHTCOLOR_U] = glGetUniformLocation(m_program, "lightColor");
 }
 
 Shader::~Shader()
@@ -48,6 +57,8 @@ void Shader::update(const Transform& transform, const Camera& camera)
 {
 	glm::mat4 model = camera.getViewProjection() * transform.getModel();
 	glUniformMatrix4fv(m_uniforms[TRANSFORM_U], 1, GL_FALSE, &model[0][0]);
+	glUniform3f(m_uniforms[OBJECTCOLOR_U], 1.0f, 0.5f, 0.31f);
+	glUniform3f(m_uniforms[LIGHTCOLOR_U], 1.0f, 1.0f, 1.0f);
 }
 
 static std::string loadShader(const std::string& fileName)

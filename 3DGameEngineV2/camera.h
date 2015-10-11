@@ -22,7 +22,7 @@ public:
 		m_zFar(zFar)
 	{
 		m_perspective = glm::perspective(fov, aspect, zNear, zFar);
-		m_forward = glm::vec3(0, 0, 1);
+		m_forward = glm::vec3(0, 0, -1);
 		m_up = glm::vec3(0, 1, 0);
 	}
 

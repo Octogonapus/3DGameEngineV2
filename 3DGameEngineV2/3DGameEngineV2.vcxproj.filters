@@ -44,20 +44,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\basicShader.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\basicShader.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\shaders\simpleVertexNew.vs">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\shaders\simpleFragmentNew.fs">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="renderingEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -94,5 +80,19 @@
     <ClInclude Include="inputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\basicShader.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\basicShader.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\lampShader.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\lampShader.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
