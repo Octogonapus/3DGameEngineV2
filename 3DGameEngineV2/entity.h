@@ -46,7 +46,7 @@ public:
 	virtual ~Entity();
 
 	//Render the entity
-	void render(const Camera& camera, const glm::vec3& lightDir);
+	void render(const Camera& camera);
 
 	inline Mesh* getMesh() { return &m_mesh; }
 	inline Shader* getShader() { return &m_shader; }

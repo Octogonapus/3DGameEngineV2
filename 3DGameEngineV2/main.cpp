@@ -45,15 +45,23 @@ int main()
 
 	Mesh mesh1("cubeNew.dae");
 
-	Entity entity1(mesh1, "basicShader", "container2.png", "container2_specular.png", "matrix.jpg");
-	Entity entity2(mesh1, "lampShader", "bricks.jpg");
+	Entity entity1(mesh1, "basicShader", "container2.png", "container2_specular.png");
+	Entity entity1Outline(mesh1, "outlineShader", "bricks.jpg");
+	entity1Outline.getTransform()->setScale(glm::vec3(1.1f, 1.1f, 1.1f));
 
-	entity2.getTransform()->setPos(glm::vec3(0.0f, 0.5f, 2.0f));
-	entity2.getTransform()->setScale(glm::vec3(0.1f, 0.1f, 0.1f));
-	
+	Entity entity2(mesh1, "basicShader", "container2.png", "container2_specular.png");
+	entity2.getTransform()->setPos(glm::vec3(-2, 0, -3));
+	Entity entity2Outline(mesh1, "outlineShader", "bricks.jpg");
+	entity2Outline.getTransform()->setPos(glm::vec3(-2, 0, -3));
+	entity2Outline.getTransform()->setScale(glm::vec3(1.1f, 1.1f, 1.1f));
+
+	Entity pointLight1(mesh1, "lampShader", "bricks.jpg");
+	pointLight1.getTransform()->setPos(glm::vec3(0.7f, 0.2f, 2.0f));
+	pointLight1.getTransform()->setScale(glm::vec3(0.05f, 0.05f, 0.05f));
+
 	float counter = 0.0f;
 
-	Camera mainCamera(glm::vec3(0, 0, 13), 70.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 1000.0f);
+	Camera mainCamera(glm::vec3(0, 3, 13), 70.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 1000.0f);
 
 	//Main game loop
 	//Do not end the loop until the window has been told to close
@@ -71,11 +79,25 @@ int main()
 		mainCamera.updateMovement();
 
 		//Update transforms
-		entity2.getTransform()->setPosX(entity2.getTransform()->getPos().x + cosf(counter) / 98);
 
 		//Draw
-		entity1.render(mainCamera, entity2.getTransform()->getPos());
-		entity2.render(mainCamera, entity2.getTransform()->getPos());
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+		glStencilMask(0x00);
+		pointLight1.render(mainCamera);
+
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+		glStencilFunc(GL_ALWAYS, 1, 0xFF);
+		glStencilMask(0xFF);
+		entity1.render(mainCamera);
+		entity2.render(mainCamera);
+
+		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+		glStencilMask(0x00);
+		//glDisable(GL_DEPTH_TEST);
+		entity1Outline.render(mainCamera);
+		entity2Outline.render(mainCamera);
+		glStencilMask(0xFF);
+		glEnable(GL_DEPTH_TEST);
 		
 		//Increment counter for transform modification
 		counter += 0.01f;

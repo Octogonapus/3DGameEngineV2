@@ -98,6 +98,8 @@
     <None Include="res\shaders\basicShader.vs" />
     <None Include="res\shaders\lampShader.fs" />
     <None Include="res\shaders\lampShader.vs" />
+    <None Include="res\shaders\outlineShader.fs" />
+    <None Include="res\shaders\outlineShader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

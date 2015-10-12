@@ -2,7 +2,7 @@
 #include "shader.h"
 
 //Global static pointer to ensure single instance
-RenderingEngine* RenderingEngine::m_instance = NULL;
+RenderingEngine* RenderingEngine::m_instance = nullptr;
 
 //Singleton class - Return the same instance of this class
 RenderingEngine* RenderingEngine::instance()
@@ -23,8 +23,6 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 		std::cout << "RenderingEngine failed to initialize." << std::endl;
 		return;
 	}
-	else
-		std::cout << "GLFW initialized correctly." << std::endl;
 
 	//Setup GLFW
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -32,6 +30,7 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+	glfwWindowHint(GLFW_SAMPLES, 4);
 	
 	//Make the window
 	m_window = glfwCreateWindow(width, height, title, monitor, share);
@@ -51,8 +50,6 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 
 		return;
 	}
-	else
-		std::cout << "GLFW window created successfully." << std::endl;
 
 	/* ----- Start GLEW ----- */
 
@@ -69,8 +66,6 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 
 		return;
 	}
-	else
-		std::cout << "GLEW initialized correctly." << std::endl;
 
 	//Tell OpenGL the size of the rendering window
 	//Making this smaller than the window size allows other elements to be displayed outside the OpenGL viewport
@@ -78,6 +73,7 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 
 	//Depth buffer
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
 
 	//Back face culling
 	glEnable(GL_CULL_FACE);
@@ -85,6 +81,9 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 
 	//Stencil testing
 	glEnable(GL_STENCIL_TEST);
+	glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
-	std::cout << "RenderingEngine initialized correctly." << std::endl;
+	//MSAA
+	glEnable(GL_MULTISAMPLE);
 }
