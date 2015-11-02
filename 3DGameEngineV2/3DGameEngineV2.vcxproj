@@ -69,23 +69,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="entity.cpp" />
-    <ClCompile Include="indexedModel.cpp" />
-    <ClCompile Include="inputManager.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="mesh.cpp" />
-    <ClCompile Include="meshData.cpp" />
-    <ClCompile Include="renderingEngine.cpp" />
-    <ClCompile Include="shader.cpp" />
-    <ClCompile Include="texture.cpp" />
+    <None Include="res\shaders\basicShader.fs" />
+    <None Include="res\shaders\basicShader.vs" />
+    <None Include="res\shaders\lampShader.fs" />
+    <None Include="res\shaders\lampShader.vs" />
+    <None Include="res\shaders\normalTest.fs" />
+    <None Include="res\shaders\normalTest.vs" />
+    <None Include="res\shaders\outlineShader.fs" />
+    <None Include="res\shaders\outlineShader.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
+    <ClInclude Include="directionalLight.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="indexedModel.h" />
     <ClInclude Include="inputManager.h" />
+    <ClInclude Include="lightManager.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="meshData.h" />
+    <ClInclude Include="pointLight.h" />
     <ClInclude Include="referenceCounter.h" />
     <ClInclude Include="renderingEngine.h" />
     <ClInclude Include="shader.h" />
@@ -94,12 +96,16 @@
     <ClInclude Include="vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shaders\basicShader.fs" />
-    <None Include="res\shaders\basicShader.vs" />
-    <None Include="res\shaders\lampShader.fs" />
-    <None Include="res\shaders\lampShader.vs" />
-    <None Include="res\shaders\outlineShader.fs" />
-    <None Include="res\shaders\outlineShader.vs" />
+    <ClCompile Include="entity.cpp" />
+    <ClCompile Include="indexedModel.cpp" />
+    <ClCompile Include="inputManager.cpp" />
+    <ClCompile Include="lightManager.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mesh.cpp" />
+    <ClCompile Include="meshData.cpp" />
+    <ClCompile Include="renderingEngine.cpp" />
+    <ClCompile Include="shader.cpp" />
+    <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

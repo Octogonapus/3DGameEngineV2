@@ -19,15 +19,28 @@ public:
 		m_mesh(mesh),
 		m_shader(shaderFileName),
 		m_texture(textureFileName),
-		m_hasSpecularMap(true),
-		m_specularMapTexture(specularMapTextureFileName),
+		//m_hasSpecularMap(true),
+		//m_specularMapTexture(specularMapTextureFileName),
+		m_hasNormalMap(true),
+		m_normalMapTexture(specularMapTextureFileName),
 		m_transform() {}
-	Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName, const std::string& specularMapTextureFileName, const std::string& emissionMapTextureFileName):
+	Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName, const std::string& specularMapTextureFileName, const std::string& normalMapTextureFileName):
 		m_mesh(mesh),
 		m_shader(shaderFileName),
 		m_texture(textureFileName),
 		m_hasSpecularMap(true),
 		m_specularMapTexture(specularMapTextureFileName),
+		m_hasNormalMap(true),
+		m_normalMapTexture(normalMapTextureFileName),
+		m_transform() {}
+	Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName, const std::string& specularMapTextureFileName, const std::string& normalMapTextureFileName, const std::string& emissionMapTextureFileName):
+		m_mesh(mesh),
+		m_shader(shaderFileName),
+		m_texture(textureFileName),
+		m_hasSpecularMap(true),
+		m_specularMapTexture(specularMapTextureFileName),
+		m_hasNormalMap(true),
+		m_normalMapTexture(normalMapTextureFileName),
 		m_hasEmissionMap(true),
 		m_emissionMapTexture(emissionMapTextureFileName),
 		m_transform() {}
@@ -46,7 +59,11 @@ public:
 	virtual ~Entity();
 
 	//Render the entity
-	void render(const Camera& camera);
+	void render(const Camera& camera, const glm::vec3& lightPos);
+
+	inline void addSpecularMap(const std::string& specularMapTextureFileName) { m_hasSpecularMap = true; m_specularMapTexture = Texture(specularMapTextureFileName); }
+	inline void addNormalMap(const std::string& normalMapTextureFileName) { m_hasNormalMap = true; m_normalMapTexture = Texture(normalMapTextureFileName); }
+	inline void addEmissionMap(const std::string& emissionMapTextureFileName) { m_hasEmissionMap = true; m_emissionMapTexture = Texture(emissionMapTextureFileName); }
 
 	inline Mesh* getMesh() { return &m_mesh; }
 	inline Shader* getShader() { return &m_shader; }
@@ -65,6 +82,10 @@ private:
 	//Specular map
 	bool m_hasSpecularMap = false;
 	Texture m_specularMapTexture;
+
+	//Normal map
+	bool m_hasNormalMap = false;
+	Texture m_normalMapTexture;
 
 	//Emission map
 	bool m_hasEmissionMap = false;

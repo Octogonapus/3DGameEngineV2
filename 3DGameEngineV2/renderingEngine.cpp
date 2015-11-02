@@ -86,4 +86,7 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 
 	//MSAA
 	glEnable(GL_MULTISAMPLE);
+
+	//Gamma correction
+	glEnable(GL_FRAMEBUFFER_SRGB);
 }

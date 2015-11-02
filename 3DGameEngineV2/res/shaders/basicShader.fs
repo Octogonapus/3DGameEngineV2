@@ -1,10 +1,11 @@
-#version 330 core
+#version 440 core
 
 struct Material
 {
 	sampler2D diffuse;
 	sampler2D specular;
 	sampler2D emission;
+	sampler2D normal;
 	float shininess;
 };
 
@@ -33,6 +34,9 @@ in vec3 fragPos0;
 
 out vec4 color;
 
+#define NUM_DIRLIGHTS 1
+#define NUM_POINTLIGHTS 1
+
 uniform vec3 viewPos;
 uniform Material material;
 uniform DirLight dirLight;
@@ -43,17 +47,26 @@ vec3 calcPointLight(PointLight light, vec3 normal, vec3 viewDir, vec3 fragPos);
 
 void main()
 {
-	vec3 norm = normalize(normal0);
+	vec3 norm = texture(material.normal, texCoord0).rgb;
+	norm = normalize(norm * 2.0 - 1.0);
 	vec3 viewDir = normalize(viewPos - fragPos0);
 
+	//Light sum
+	vec3 result;
+
 	//Directional light
-	vec3 result = calcDirLight(dirLight, norm, viewDir);
+	for (int i = 0; i < NUM_DIRLIGHTS; i++)
+		result += calcDirLight(dirLight, norm, viewDir);
 
 	//Point light
-	result += calcPointLight(pointLight, norm, viewDir, fragPos0);
+	for (int i = 0; i < NUM_POINTLIGHTS; i++)
+		result += calcPointLight(pointLight, norm, viewDir, fragPos0);
 	
 	//Emission
 	result += vec3(texture(material.emission, texCoord0));
+
+	//Gamma correction
+	result.rgb = pow(result.rgb, vec3(1.0 / 0.4)); //Gamma = 0.4
 
 	color = vec4(result, 1.0);
 }

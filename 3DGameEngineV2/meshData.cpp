@@ -15,6 +15,7 @@ MeshData::MeshData(const IndexedModel& model):
 	glBindVertexArray(m_vao);
 
 	glGenBuffers(NUM_BUFFERS, m_vab);
+
 	glBindBuffer(GL_ARRAY_BUFFER, m_vab[POSITION_VB]);
 	glBufferData(GL_ARRAY_BUFFER, model.getPositions().size() * sizeof(model.getPositions()[0]), &model.getPositions()[0], GL_STATIC_DRAW);
 	

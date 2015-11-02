@@ -17,8 +17,9 @@ Shader::Shader(const std::string& fileName)
 		glAttachShader(m_program, m_shaders[i]);
 
 	glBindAttribLocation(m_program, 0, "position");
-	glBindAttribLocation(m_program, 1, "texCoord");
+	glBindAttribLocation(m_program, 1, "texCoords");
 	glBindAttribLocation(m_program, 2, "normal");
+	glBindAttribLocation(m_program, 3, "tangent");
 
 	glLinkProgram(m_program);
 	checkShaderError(m_program, GL_LINK_STATUS, true, "Shader program link failed: ");
@@ -31,11 +32,13 @@ Shader::Shader(const std::string& fileName)
 	m_uniforms[PROJECTION_U] = glGetUniformLocation(m_program, "projection");
 	
 	m_uniforms[VIEWPOS_U] = glGetUniformLocation(m_program, "viewPos");
+	m_uniforms[LIGHTPOS_U] = glGetUniformLocation(m_program, "lightPos");
 
-	m_uniforms[MAT_DIFFUSE_U] = glGetUniformLocation(m_program, "material.diffuse");
-	m_uniforms[MAT_SPECULAR_U] = glGetUniformLocation(m_program, "material.specular");
-	m_uniforms[MAT_EMISSION_U] = glGetUniformLocation(m_program, "material.emission");
-	m_uniforms[MAT_SHININESS_U] = glGetUniformLocation(m_program, "material.shininess");
+	m_uniforms[MAT_DIFFUSE_U] = glGetUniformLocation(m_program, "diffuseMap");
+	//m_uniforms[MAT_SPECULAR_U] = glGetUniformLocation(m_program, "material.specular");
+	//m_uniforms[MAT_EMISSION_U] = glGetUniformLocation(m_program, "material.emission");
+	m_uniforms[MAT_NORMAL_U] = glGetUniformLocation(m_program, "normalMap");
+	/*m_uniforms[MAT_SHININESS_U] = glGetUniformLocation(m_program, "material.shininess");
 
 	m_uniforms[DLIGHT_DIRECTION_U] = glGetUniformLocation(m_program, "dirLight.direction");
 	m_uniforms[DLIGHT_AMBIENT_U] = glGetUniformLocation(m_program, "dirLight.ambient");
@@ -48,7 +51,7 @@ Shader::Shader(const std::string& fileName)
 	m_uniforms[PLIGHT_SPECULAR_U] = glGetUniformLocation(m_program, "pointLight.specular");
 	m_uniforms[PLIGHT_CONSTANT_U] = glGetUniformLocation(m_program, "pointLight.constant");
 	m_uniforms[PLIGHT_LINEAR_U] = glGetUniformLocation(m_program, "pointLight.position");
-	m_uniforms[PLIGHT_QUADRATIC_U] = glGetUniformLocation(m_program, "pointLight.quadratic");
+	m_uniforms[PLIGHT_QUADRATIC_U] = glGetUniformLocation(m_program, "pointLight.quadratic");*/
 }
 
 Shader::~Shader()
@@ -66,18 +69,21 @@ void Shader::use()
 	glUseProgram(m_program);
 }
 
-void Shader::update(const Transform& transform, const Camera& camera)
+void Shader::update(const Transform& transform, const Camera& camera, const glm::vec3& lightPos)
 {
 	glUniformMatrix4fv(m_uniforms[MODEL_U], 1, GL_FALSE, &transform.getModel()[0][0]);
 	glUniformMatrix4fv(m_uniforms[VIEW_U], 1, GL_FALSE, &camera.getView()[0][0]);
 	glUniformMatrix4fv(m_uniforms[PROJECTION_U], 1, GL_FALSE, &camera.getProjection()[0][0]);
 
 	glUniform3f(m_uniforms[VIEWPOS_U], camera.getPosition().x, camera.getPosition().y, camera.getPosition().z);
+	glUniform3f(m_uniforms[LIGHTPOS_U], lightPos.x, lightPos.y, lightPos.z);
 
 	glUniform1i(m_uniforms[MAT_DIFFUSE_U], 0);
-	glUniform1i(m_uniforms[MAT_SPECULAR_U], 1);
-	glUniform1i(m_uniforms[MAT_EMISSION_U], 2);
-	glUniform1f(m_uniforms[MAT_SHININESS_U], 32.0f);
+	//glUniform1i(m_uniforms[MAT_SPECULAR_U], 3);
+	//glUniform1i(m_uniforms[MAT_EMISSION_U], 2);
+	glUniform1i(m_uniforms[MAT_NORMAL_U], 1);
+	glUniform1i(glGetUniformLocation(m_program, "normalMapping"), 1);
+	/*glUniform1f(m_uniforms[MAT_SHININESS_U], 32.0f);
 
 	glUniform3f(m_uniforms[DLIGHT_DIRECTION_U], -0.2f, -1.0f, -0.3f);
 	glUniform3f(m_uniforms[DLIGHT_AMBIENT_U], 0.05f, 0.05f, 0.05f);
@@ -90,7 +96,7 @@ void Shader::update(const Transform& transform, const Camera& camera)
 	glUniform3f(m_uniforms[PLIGHT_SPECULAR_U], 1.0f, 1.0f, 1.0f);
 	glUniform1f(m_uniforms[PLIGHT_CONSTANT_U], 1.0f);
 	glUniform1f(m_uniforms[PLIGHT_LINEAR_U], 0.09f);
-	glUniform1f(m_uniforms[PLIGHT_QUADRATIC_U], 0.032f);
+	glUniform1f(m_uniforms[PLIGHT_QUADRATIC_U], 0.032f);*/
 }
 
 static std::string loadShader(const std::string& fileName)

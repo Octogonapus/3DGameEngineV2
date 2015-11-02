@@ -43,25 +43,26 @@ int main()
 	glfwSetCursorPosCallback(re->getWindow(), mouse_callback);
 	glfwSetScrollCallback(re->getWindow(), scroll_callback);
 
-	Mesh mesh1("cubeNew.dae");
+	Mesh mesh1("cube.obj");
 
-	Entity entity1(mesh1, "basicShader", "container2.png", "container2_specular.png");
+	Entity entity1(mesh1, "normalTest", "brickwall.jpg", "brickwall_normal.jpg");
 	Entity entity1Outline(mesh1, "outlineShader", "bricks.jpg");
 	entity1Outline.getTransform()->setScale(glm::vec3(1.1f, 1.1f, 1.1f));
+	entity1.getTransform()->setPos(glm::vec3(0, -2, 0));
 
-	Entity entity2(mesh1, "basicShader", "container2.png", "container2_specular.png");
-	entity2.getTransform()->setPos(glm::vec3(-2, 0, -3));
+	//Entity entity2(mesh1, "basicShader", "container2.png", "container2_specular.png");
+	//entity2.getTransform()->setPos(glm::vec3(-2, 0, -3));
 	Entity entity2Outline(mesh1, "outlineShader", "bricks.jpg");
 	entity2Outline.getTransform()->setPos(glm::vec3(-2, 0, -3));
 	entity2Outline.getTransform()->setScale(glm::vec3(1.1f, 1.1f, 1.1f));
 
 	Entity pointLight1(mesh1, "lampShader", "bricks.jpg");
-	pointLight1.getTransform()->setPos(glm::vec3(0.7f, 0.2f, 2.0f));
+	pointLight1.getTransform()->setPos(glm::vec3(0, -0.5f, 0));
 	pointLight1.getTransform()->setScale(glm::vec3(0.05f, 0.05f, 0.05f));
 
 	float counter = 0.0f;
 
-	Camera mainCamera(glm::vec3(0, 3, 13), 70.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 1000.0f);
+	Camera mainCamera(glm::vec3(0, 0, 3), 70.0f, (float)WIDTH / (float)HEIGHT, 0.01f, 1000.0f);
 
 	//Main game loop
 	//Do not end the loop until the window has been told to close
@@ -83,19 +84,21 @@ int main()
 		//Draw
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 		glStencilMask(0x00);
-		pointLight1.render(mainCamera);
+		pointLight1.render(mainCamera, pointLight1.getTransform()->getPos());
+		pointLight1.getTransform()->setPosX(sinf(counter));
+		pointLight1.getTransform()->setPosZ(sinf(counter));
 
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 		glStencilFunc(GL_ALWAYS, 1, 0xFF);
 		glStencilMask(0xFF);
-		entity1.render(mainCamera);
-		entity2.render(mainCamera);
+		entity1.render(mainCamera, pointLight1.getTransform()->getPos());
+		//entity2.render(mainCamera);
 
 		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
 		glStencilMask(0x00);
 		//glDisable(GL_DEPTH_TEST);
-		entity1Outline.render(mainCamera);
-		entity2Outline.render(mainCamera);
+		//entity1Outline.render(mainCamera, pointLight1.getTransform()->getPos());
+		//entity2Outline.render(mainCamera);
 		glStencilMask(0xFF);
 		glEnable(GL_DEPTH_TEST);
 		

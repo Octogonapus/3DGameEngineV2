@@ -18,7 +18,7 @@ public:
 	void use();
 
 	//Update all the uniforms
-	void update(const Transform& transform, const Camera& camera);
+	void update(const Transform& transform, const Camera& camera, const glm::vec3& lightPos);
 private:
 	//Full shader program
 	GLuint m_program;
@@ -34,9 +34,11 @@ private:
 		VIEW_U,
 		PROJECTION_U,
 		VIEWPOS_U,
+		LIGHTPOS_U,
 		MAT_DIFFUSE_U,
 		MAT_SPECULAR_U,
 		MAT_EMISSION_U,
+		MAT_NORMAL_U,
 		MAT_SHININESS_U,
 		DLIGHT_DIRECTION_U,
 		DLIGHT_AMBIENT_U,
