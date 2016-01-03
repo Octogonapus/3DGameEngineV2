@@ -89,4 +89,7 @@ void RenderingEngine::initialize(const GLuint width, const GLuint height, const 
 
 	//Gamma correction
 	glEnable(GL_FRAMEBUFFER_SRGB);
+
+	//Wireframe mode
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }

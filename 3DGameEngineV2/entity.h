@@ -15,7 +15,7 @@ public:
 		m_shader(shaderFileName),
 		m_texture(textureFileName),
 		m_transform() {}
-	Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName, const std::string& specularMapTextureFileName):
+	/*Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName, const std::string& specularMapTextureFileName):
 		m_mesh(mesh),
 		m_shader(shaderFileName),
 		m_texture(textureFileName),
@@ -32,7 +32,7 @@ public:
 		m_specularMapTexture(specularMapTextureFileName),
 		m_hasNormalMap(true),
 		m_normalMapTexture(normalMapTextureFileName),
-		m_transform() {}
+		m_transform() {}*/
 	Entity(const Mesh& mesh, const std::string& shaderFileName, const std::string& textureFileName, const std::string& specularMapTextureFileName, const std::string& normalMapTextureFileName, const std::string& emissionMapTextureFileName):
 		m_mesh(mesh),
 		m_shader(shaderFileName),
@@ -44,7 +44,7 @@ public:
 		m_hasEmissionMap(true),
 		m_emissionMapTexture(emissionMapTextureFileName),
 		m_transform() {}
-	Entity(const Mesh& mesh, const Shader& shader, const Texture& texture, const Transform& transform):
+	/*Entity(const Mesh& mesh, const Shader& shader, const Texture& texture, const Transform& transform):
 		m_mesh(mesh),
 		m_shader(m_shader),
 		m_texture(texture),
@@ -55,7 +55,7 @@ public:
 		m_texture(texture),
 		m_hasSpecularMap(true),
 		m_specularMapTexture(specularMapTexture),
-		m_transform(transform) {}
+		m_transform(transform) {}*/
 	virtual ~Entity();
 
 	//Render the entity

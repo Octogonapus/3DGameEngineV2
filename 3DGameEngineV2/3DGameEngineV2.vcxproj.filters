@@ -39,6 +39,9 @@
     <None Include="res\shaders\normalTest.vs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="res\shaders\tessellationShader.cs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="vertex.h">

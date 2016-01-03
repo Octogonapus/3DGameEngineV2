@@ -9,6 +9,7 @@ Entity::~Entity()
 
 void Entity::render(const Camera& camera, const glm::vec3& lightPos)
 {
+	//Diffuse map is required
 	m_texture.bind(0);
 
 	if (m_hasSpecularMap)

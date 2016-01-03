@@ -45,7 +45,7 @@ int main()
 
 	Mesh mesh1("cube.obj");
 
-	Entity entity1(mesh1, "normalTest", "brickwall.jpg", "brickwall_normal.jpg");
+	Entity entity1(mesh1, "normalTest", "container2.png", "blank.png", "blank_normal.png", "blank.png");
 	Entity entity1Outline(mesh1, "outlineShader", "bricks.jpg");
 	entity1Outline.getTransform()->setScale(glm::vec3(1.1f, 1.1f, 1.1f));
 	entity1.getTransform()->setPos(glm::vec3(0, -2, 0));
@@ -85,14 +85,14 @@ int main()
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 		glStencilMask(0x00);
 		pointLight1.render(mainCamera, pointLight1.getTransform()->getPos());
-		pointLight1.getTransform()->setPosX(sinf(counter));
-		pointLight1.getTransform()->setPosZ(sinf(counter));
+		pointLight1.getTransform()->setPosX(1.5 * sinf(counter));
+		pointLight1.getTransform()->setPosZ(1.5 * sinf(counter));
 
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 		glStencilFunc(GL_ALWAYS, 1, 0xFF);
 		glStencilMask(0xFF);
 		entity1.render(mainCamera, pointLight1.getTransform()->getPos());
-		//entity2.render(mainCamera);
+		//entity2.render(mainCamera, pointLight1.getTransform()->getPos());
 
 		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
 		glStencilMask(0x00);

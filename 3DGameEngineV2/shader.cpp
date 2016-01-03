@@ -36,7 +36,7 @@ Shader::Shader(const std::string& fileName)
 
 	m_uniforms[MAT_DIFFUSE_U] = glGetUniformLocation(m_program, "diffuseMap");
 	//m_uniforms[MAT_SPECULAR_U] = glGetUniformLocation(m_program, "material.specular");
-	//m_uniforms[MAT_EMISSION_U] = glGetUniformLocation(m_program, "material.emission");
+	m_uniforms[MAT_EMISSION_U] = glGetUniformLocation(m_program, "emissionMap");
 	m_uniforms[MAT_NORMAL_U] = glGetUniformLocation(m_program, "normalMap");
 	/*m_uniforms[MAT_SHININESS_U] = glGetUniformLocation(m_program, "material.shininess");
 
@@ -80,7 +80,7 @@ void Shader::update(const Transform& transform, const Camera& camera, const glm:
 
 	glUniform1i(m_uniforms[MAT_DIFFUSE_U], 0);
 	//glUniform1i(m_uniforms[MAT_SPECULAR_U], 3);
-	//glUniform1i(m_uniforms[MAT_EMISSION_U], 2);
+	glUniform1i(m_uniforms[MAT_EMISSION_U], 2);
 	glUniform1i(m_uniforms[MAT_NORMAL_U], 1);
 	glUniform1i(glGetUniformLocation(m_program, "normalMapping"), 1);
 	/*glUniform1f(m_uniforms[MAT_SHININESS_U], 32.0f);
